@@ -32,6 +32,11 @@ namespace VehicleManagementSystem
                     .EnableDetailedErrors()
                     .EnableSensitiveDataLogging());
 
+            //if (_environment.IsProduction()) // demo purpose
+            //{
+            //    services.AddDbContext<VehicleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Vehicle")));
+            //}
+
             services.AddTransient<ICarRepository, CarRepository>();
             services.AddTransient<ICarService, CarService>();
 
