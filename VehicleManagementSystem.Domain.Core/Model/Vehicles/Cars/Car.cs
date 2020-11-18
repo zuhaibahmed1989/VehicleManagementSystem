@@ -36,7 +36,7 @@ namespace VehiceManagementSystem.Domain.Core.Model.Vehicles
             this.BodyType = bodyType;
         }
 
-        public static Car Create(CreateCarCommand command, ICarValidator validator)
+        internal static Car Create(CreateCarCommand command, ICarValidator validator)
         {
             var car = new Car(command.Make,
                 command.Model,

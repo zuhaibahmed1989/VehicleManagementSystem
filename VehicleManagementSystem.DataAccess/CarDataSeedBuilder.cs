@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using VehiceManagementSystem.Domain.Core.Enums;
 using VehiceManagementSystem.Domain.Core.Model.Vehicles;
-using VehicleManagementSystem.Domain.Core.Model.Vehicles;
 
 namespace VehicleManagementSystem.DataAccess
 {
@@ -11,40 +10,45 @@ namespace VehicleManagementSystem.DataAccess
         {
             var cars = new List<Car>()
             {
-                Car.Create(new CreateCarCommand(make: "Toyota",
+                new CarFactory()
+                .Create(new CreateCarCommand(make: "Toyota",
                     model: "Corolla",
                     engine: "4cyl",
                     doors: 4,
                     wheels: 4,
-                    CarBodyType.Sedan), new CarValidator()),
+                    CarBodyType.Sedan)),
 
-                Car.Create(new CreateCarCommand(make: "Toyota",
+                new CarFactory()
+                .Create(new CreateCarCommand(make: "Toyota",
                     model: "Yaris",
                     engine: "4cyl",
                     doors: 3,
                     wheels: 4,
-                    CarBodyType.Hatchback), new CarValidator()),
+                    CarBodyType.Hatchback)),
 
-                Car.Create(new CreateCarCommand(make: "Ford",
+                new CarFactory()
+                .Create(new CreateCarCommand(make: "Ford",
                     model: "Falcon",
                     engine: "6cyl",
                     doors: 4,
                     wheels: 4,
-                    CarBodyType.Sedan), new CarValidator()),
+                    CarBodyType.Sedan)),
 
-                Car.Create(new CreateCarCommand(make: "Holden",
+                new CarFactory()
+                .Create(new CreateCarCommand(make: "Holden",
                     model: "Commodore",
                     engine: "6cyl",
                     doors: 4,
                     wheels: 4,
-                    CarBodyType.Sedan), new CarValidator()),
+                    CarBodyType.Sedan)),
 
-                Car.Create(new CreateCarCommand(make: "Nissan",
+                new CarFactory()
+                .Create(new CreateCarCommand(make: "Nissan",
                     model: "Leaf",
                     engine: "cylinder Electric L",
                     doors: 5,
                     wheels: 4,
-                    CarBodyType.Hatchback), new CarValidator()),
+                    CarBodyType.Hatchback)),
             };
 
             return cars;
