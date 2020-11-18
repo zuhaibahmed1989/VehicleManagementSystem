@@ -67,60 +67,42 @@ namespace VehicleManagementSystem.UnitTest
             Assert.Equal(CarBodyType.Hatchback, car.BodyType);
         }
 
-        [Fact]
-        public void BDDScenario_1_2_2_HondaCivicHavingZeroNumOfDoorsShouldFail()
+        [Theory]
+        [InlineData("Honda", "Civic", "4 cylinder Petrol Aspirated 1.8L", 0, 4)]//zero num of doors is incorrect for a car
+        [InlineData("Honda", "Civic", "4 cylinder Petrol Aspirated 1.8L", 20, 4)]//Twenty num of doors is incorrect for a car
+        public void BDDScenario_1_2_2_HondaCivicHavingInvalidNumOfDoorsShouldFail(string make,
+                string model,
+                string engine,
+                int doors,
+                int wheels)
         {
             IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
-            CreateCarCommand createCarCommand = new CreateCarCommand(make: "Honda",
-                model: "Civic",
-                engine: "4 cylinder Petrol Aspirated 1.8L",
-                doors: 0,
-                wheels: 4,
+            CreateCarCommand createCarCommand = new CreateCarCommand(make,
+                model,
+                engine,
+                doors,
+                wheels,
                 CarBodyType.Hatchback);
 
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() => factory.Create(createCarCommand));
             Assert.Equal(nameof(Car.Doors).ToLowerInvariant(), exception.ParamName.ToLowerInvariant());
         }
 
-        [Fact]
-        public void BDDScenario_1_2_3_HondaCivicHavingTwentyNumOfDoorsShouldFail()
+        [Theory]
+        [InlineData("Honda", "Civic", "4 cylinder Petrol Aspirated 1.8L", 5, 0)]//zero num of wheels is incorrect for a car
+        [InlineData("Honda", "Civic", "4 cylinder Petrol Aspirated 1.8L", 5, 20)]//Twenty num of wheels is incorrect for a car
+        public void BDDScenario_1_2_4_HondaCivicHavingInvalidNumOfWheelsShouldFail(string make,
+                string model,
+                string engine,
+                int doors,
+                int wheels)
         {
             IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
-            CreateCarCommand createCarCommand = new CreateCarCommand(make: "Honda",
-                model: "Civic",
-                engine: "4 cylinder Petrol Aspirated 1.8L",
-                doors: 20,// easy to mistype 20 instead of 2
-                wheels: 4,
-                CarBodyType.Hatchback);
-
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => factory.Create(createCarCommand));
-            Assert.Equal(nameof(Car.Doors).ToLowerInvariant(), exception.ParamName.ToLowerInvariant());
-        }
-
-        [Fact]
-        public void BDDScenario_1_2_4_HondaCivicHavingZeroNumOfWheelsShouldFail()
-        {
-            IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
-            CreateCarCommand createCarCommand = new CreateCarCommand(make: "Honda",
-                model: "Civic",
-                engine: "4 cylinder Petrol Aspirated 1.8L",
-                doors: 5,
-                wheels: 0,
-                CarBodyType.Hatchback);
-
-            var exception = Assert.Throws<ArgumentOutOfRangeException>(() => factory.Create(createCarCommand));
-            Assert.Equal(nameof(Car.Wheels).ToLowerInvariant(), exception.ParamName.ToLowerInvariant());
-        }
-
-        [Fact]
-        public void BDDScenario_1_2_5_HondaCivicHavingTwentyNumOfWheelsShouldFail()
-        {
-            IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
-            CreateCarCommand createCarCommand = new CreateCarCommand(make: "Honda",
-                model: "Civic",
-                engine: "4 cylinder Petrol Aspirated 1.8L",
-                doors: 5,
-                wheels: 20,
+            CreateCarCommand createCarCommand = new CreateCarCommand(make,
+                model,
+                engine,
+                doors,
+                wheels,
                 CarBodyType.Hatchback);
 
             var exception = Assert.Throws<ArgumentOutOfRangeException>(() => factory.Create(createCarCommand));
@@ -131,30 +113,23 @@ namespace VehicleManagementSystem.UnitTest
         // Demo for future extension: Add a Kawasaki boat and verify that it is a boat.
         public void BDDScenario_2_1_1()
         {
-            string make = "Kawasaki";
-            string model = "Jet Ski SX-R";
-            string engine = "6-cylinder, 4-stroke";
-            int doors = 4;
-            int wheels = 4;
+            //string make = "Kawasaki";
+            //string model = "Jet Ski SX-R";
+            //string engine = "6-cylinder, 4-stroke";
 
-            IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
+            //IVehicleFactory<Boat, CreateBoatCommand> factory = new BoatFactory();
 
-            CreateCarCommand createCarCommand = new CreateCarCommand(make,
-                model,
-                engine,
-                doors,
-                wheels,
-                CarBodyType.Sedan);
+            //CreateBoatCommand createBoatCommand = new CreateBoatCommand(make,
+            //    model,
+            //    engine,
+            //    CarBodyType.Sedan);
 
-            Car car = factory.Create(createCarCommand);
+            //Boat boat = factory.Create(createBoatCommand);
 
-            Assert.NotNull(car);
-            Assert.Equal(make, car.Make);
-            Assert.Equal(model, car.Model);
-            Assert.Equal(engine, car.Engine);
-            Assert.Equal(doors, car.Doors);
-            Assert.Equal(wheels, car.Wheels);
-            Assert.Equal(CarBodyType.Sedan, car.BodyType);
+            //Assert.NotNull(boat);
+            //Assert.Equal(make, boat.Make);
+            //Assert.Equal(model, boat.Model);
+            //Assert.Equal(engine, boat.Engine);
         }
     }
 }
