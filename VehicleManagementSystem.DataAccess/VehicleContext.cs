@@ -17,10 +17,9 @@ namespace VehicleManagementSystem.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             modelBuilder.SeedData();
         }
 
-        public DbSet<Car> Cars { get; internal set; }
+        public DbSet<Car> Cars { get; set; }
     }
 }
