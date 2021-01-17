@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using VehiceManagementSystem.Application.Services;
+using VehiceManagementSystem.Domain.Core.Model.Vehicles;
 using VehicleManagementSystem.DataAccess;
 using VehicleManagementSystem.Domain.Core.Model.Vehicles;
 
@@ -37,6 +38,7 @@ namespace VehicleManagementSystem
             //    services.AddDbContext<VehicleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Vehicle")));
             //}
 
+            services.AddTransient<IVehicleFactory<Car, CreateCarCommand>, CarFactory>();
             services.AddTransient<ICarRepository, CarRepository>();
             services.AddTransient<ICarService, CarService>();
 
@@ -45,6 +47,9 @@ namespace VehicleManagementSystem
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VehicleManagementSystem", Version = "v1" });
             });
+
+            if(_environment.IsDevelopment())
+                services.SetDevCorsPolicy();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +65,7 @@ namespace VehicleManagementSystem
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

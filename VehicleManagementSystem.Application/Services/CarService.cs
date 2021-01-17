@@ -11,11 +11,15 @@ namespace VehiceManagementSystem.Application.Services
     {
         private readonly ICarRepository _carRepository;
         private readonly VehicleContext _context;
+        private readonly IVehicleFactory<Car, CreateCarCommand> _factory;
 
-        public CarService(ICarRepository carRepository, VehicleContext context)
+        public CarService(ICarRepository carRepository, 
+            VehicleContext context, 
+            IVehicleFactory<Car, CreateCarCommand> carFactory)
         {
             this._carRepository = carRepository;
             this._context = context;
+            this._factory = carFactory;
         }
 
         public async Task CreateAsync(CreateCarDto createCarDto)
@@ -27,8 +31,7 @@ namespace VehiceManagementSystem.Application.Services
                 createCarDto.Wheels,
                 createCarDto.BodyType);
 
-            IVehicleFactory<Car, CreateCarCommand> factory = new CarFactory();
-            Car car = factory.Create(createCarCommand);
+            Car car = _factory.Create(createCarCommand);
 
             await _carRepository.AddAsync(car);
             await _context.SaveChangesAsync();
